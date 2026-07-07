@@ -100,6 +100,6 @@ def generate_spaced_chart(file_path, output_img):
     plt.close()
 
 if __name__ == "__main__":
-    file_path = r"C:\Users\Lucas Mesquita\Downloads\Analise - Indice de penalti (1)_enriquecido.xlsx"
-    output_img = r"C:\Users\Lucas Mesquita\.gemini\antigravity-cli\brain\f39aa4ee-520f-44a2-9593-231b84d18138\pressure_analysis.png"
+    file_path = "Analise_Indice_Penalti_Enriquecido.xlsx"
+    output_img = "docs/pressure_analysis.png"
     generate_spaced_chart(file_path, output_img)

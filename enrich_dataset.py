@@ -240,7 +240,7 @@ def enrich_dataset_no_norway(file_path):
     ) * 10.0
     
     # Save files
-    enriched_excel = file_path.replace(".xlsx", "_enriquecido.xlsx")
+    enriched_excel = "Analise_Indice_Penalti_Enriquecido.xlsx"
     df.to_excel(enriched_excel, index=False)
     
     print("--- Enriched Penalty Dataset Statistics (No Norway) ---")
@@ -260,5 +260,5 @@ def enrich_dataset_no_norway(file_path):
         print(f"Player: {player:18s} | Penalties: {len(df_player)} | Converted: {df_player['converteu'].sum()} | Avg Pressure: {avg_pressure:.1f} | Max Pressure: {max_pressure:.1f} | CPI (AHP): {cpi_ahp:.3f}")
 
 if __name__ == "__main__":
-    file_path = r"C:\Users\Lucas Mesquita\Downloads\Analise - Indice de penalti (1).xlsx"
+    file_path = "Analise_Indice_Penalti_Original.xlsx"
     enrich_dataset_no_norway(file_path)
