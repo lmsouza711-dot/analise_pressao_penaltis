@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Post Preview - Lucas Mesquita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #090d16;
+            --card-bg: #121824;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --border-color: #1e293b;
+            --emerald: #10b981;
+            --rose: #f43f5e;
+            --linkedin-blue: #0a66c2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 650px;
+            width: 100%;
+        }
+
+        .preview-header {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .preview-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .preview-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .linkedin-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .linkedin-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 16px;
+            border: 2px solid var(--border-color);
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-details {
+            flex-grow: 1;
+        }
+
+        .user-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .user-title {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+
+        .post-time {
+            font-size: 11px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 2px;
+        }
+
+        .globe-icon {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: #64748b;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/%3E%3C/svg%3E") no-repeat center;
+            mask-size: contain;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask-size: contain;
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .card-content p {
+            margin-bottom: 12px;
+        }
+
+        .highlight-text {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .bullet-list {
+            list-style: none;
+            margin-bottom: 12px;
+            padding-left: 8px;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 6px;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Post Image */
+        .post-image-container {
+            width: 100%;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            background-color: #0f172a;
+            display: flex;
+            justify-content: center;
+        }
+
+        .post-image-container img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+        }
+
+        /* Card Footer / Interactions */
+        .card-interactions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .reaction-icons {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .reaction-bubble {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        .bubble-like { background-color: #0a66c2; }
+        .bubble-curious { background-color: #70b578; }
+        .bubble-insight { background-color: #f5bb5c; }
+
+        .reactions-count {
+            margin-left: 4px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 6px 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .action-btn:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+            background-color: var(--text-secondary);
+            display: inline-block;
+        }
+
+        .icon-like {
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19.46 8l-3.4 1.9L17 5a3 3 0 0 0-3-3h-.11a2 2 0 0 0-1.63 1.05L8.94 9H5a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h12a3 3 0 0 0 2.82-2l1.64-4.89A3 3 0 0 0 22 13v-2a3 3 0 0 0-2.54-3zM4 19a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h3v9zm16-6.32l-1.64 4.89a1 1 0 0 1-.94.67H9v-8.38l3.65-4.9a.06.06 0 0 1 .05 0A1 1 0 0 1 14 5v5.1L12.59 12h6.87a1 1 0 0 1 .86.53.94.94 0 0 1-.32 1.15z'/%3E%3C/svg%3E") no-repeat center;
+            mask-size: contain;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19.46 8l-3.4 1.9L17 5a3 3 0 0 0-3-3h-.11a2 2 0 0 0-1.63 1.05L8.94 9H5a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h12a3 3 0 0 0 2.82-2l1.64-4.89A3 3 0 0 0 22 13v-2a3 3 0 0 0-2.54-3zM4 19a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h3v9zm16-6.32l-1.64 4.89a1 1 0 0 1-.94.67H9v-8.38l3.65-4.9a.06.06 0 0 1 .05 0A1 1 0 0 1 14 5v5.1L12.59 12h6.87a1 1 0 0 1 .86.53.94.94 0 0 1-.32 1.15z'/%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask-size: contain;
+        }
+
+        .icon-comment {
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 14H5.17L4 17.17V4h16z'/%3E%3C/svg%3E") no-repeat center;
+            mask-size: contain;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 14H5.17L4 17.17V4h16z'/%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask-size: contain;
+        }
+
+        .icon-share {
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M23 12l-9-6v4h-2C6.48 10 2 14.48 2 20v2l1.09-1.63C5.7 16.32 9.87 14 14 14h0v4z'/%3E%3C/svg%3E") no-repeat center;
+            mask-size: contain;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M23 12l-9-6v4h-2C6.48 10 2 14.48 2 20v2l1.09-1.63C5.7 16.32 9.87 14 14 14h0v4z'/%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask-size: contain;
+        }
+
+        /* Comment Section preview */
+        .comments-section {
+            padding: 16px;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .comment-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: var(--border-color);
+        }
+
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .comment-bubble {
+            background-color: #1e293b;
+            border-radius: 8px;
+            padding: 12px;
+            flex-grow: 1;
+            font-size: 13px;
+        }
+
+        .comment-author {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .comment-text {
+            color: var(--text-primary);
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .code-box {
+            background-color: #090d16;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            color: #38bdf8;
+            overflow-x: auto;
+            white-space: pre;
+            margin-top: 6px;
+        }
+
+        .btn-approve {
+            display: block;
+            width: 100%;
+            background-color: var(--linkedin-blue);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 24px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .btn-approve:hover {
+            background-color: #00509d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="preview-header">
+            <h1>Simulação de Visualização do LinkedIn</h1>
+            <p>Veja como o post será exibido na rede social do Lucas Mesquita</p>
+        </div>
+
+        <div class="linkedin-card">
+            <!-- Header -->
+            <div class="card-header">
+                <div class="avatar-container">
+                    <img src="avatar.jpg" alt="Lucas Mesquita">
+                </div>
+                <div class="user-details">
+                    <div class="user-name">Lucas Mesquita</div>
+                    <div class="user-title">Investigador Científico | Focado em Dados Empíricos, Psicologia Cognitiva, CX & Market Ops</div>
+                    <div class="post-time">1 h • <span class="globe-icon"></span></div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="card-content">
+                <p><span class="highlight-text">Ancelotti olhou para a métrica errada? O perigo dos dados sem contexto no futebol ⚽📊</span></p>
+                <p>Ontem, a eliminação do Brasil contra a Noruega expôs um erro de tomada de decisão que serve como uma lição valiosa de liderança e ciência de dados.</p>
+                <p>A escolha de Bruno Guimarães para cobrar o pênalti decisivo nas Oitavas de Final parecia logicamente correta no papel. Afinal, Bruno vinha de estatísticas impecáveis: <strong>100% de aproveitamento nos treinos</strong> da semana e <strong>100% de conversão na sua carreira profissional</strong> em tempo regulamentar (3 de 3).</p>
+                <p>Mas, em Analytics, há uma regra de ouro: <strong>o dado puro, sem contexto, não diz absolutamente nada.</strong></p>
+                <p>Ao auditar a base de dados histórica das cobranças dos titulares da Seleção e aplicar o método <strong>AHP (Analytic Hierarchy Process)</strong> para mensurar a pressão psicológica de cada cobrança, o cenário real pré-jogo era outro:</p>
+                <ul class="bullet-list">
+                    <li><strong>Bruno Guimarães:</strong> Tinha de fato 3 convertidos de 3. Mas a carga média de estresse de suas cobranças era de apenas 42.2 na escala de 0 a 100. Bruno nunca havia cobrado um pênalti pela Seleção Brasileira sob a pressão extrema de uma eliminatória de Copa do Mundo.</li>
+                    <li><strong>Vini Jr:</strong> Tinha 84.6% de acerto agregados (11 de 13), mas operava sob uma carga psicológica muito maior. Enfrentou o pico de estresse da amostra (<strong>75.1</strong>) em uma semifinal de Champions League contra o Bayern de Munique aos 83 minutos. Ele já possuía a "casca" de bater sob estresse extremo.</li>
+                    <li><strong>Matheus Cunha:</strong> Apresentava CPI (Clutch Penalty Index) de <strong>1.000</strong> (4 de 4 convertidos) com média de estresse superior à de Bruno (44.5), incluindo uma cobrança aos 105 minutos de prorrogação na FA Cup (Score de 50.0).</li>
+                </ul>
+                <p><strong>O Diagnóstico:</strong><br>Ao ignorar o contexto de pressão (placar, tempo de jogo, nível competitivo e peso da camisa nacional), a comissão técnica tomou uma decisão baseada na "métrica da conveniência". Escolheu-se o jogador pelo aproveitamento no treino (pressão zero) e por uma taxa agregada confortável, ignorando o comportamento do atleta diante de cenários de estresse cognitivo elevado.</p>
+                <p>O resultado? Diante de uma pressão real calculada de <strong>45.6</strong> em Oitavas de Copa do Mundo, a atenção visual do batedor desabou (fenômeno de <em>choking</em> documentado pela psicologia do esporte), facilitando a defesa do goleiro.</p>
+                <p>No futebol ou no conselho de administração, escolher seus "batedores" com base em métricas de ambiente controlado é o caminho mais curto para falhar na hora decisiva.</p>
+                <p>Como a sua empresa avalia a performance dos seus colaboradores? Você olha para a taxa de sucesso ou para o contexto do estresse enfrentado?</p>
+            </div>
+
+            <!-- Image -->
+            <div class="post-image-container">
+                <img src="pressure_analysis.png" alt="Análise de Pênaltis sob Pressão">
+            </div>
+
+            <!-- Interaction Row -->
+            <div class="card-interactions">
+                <div class="reaction-icons">
+                    <span class="reaction-bubble bubble-like">👍</span>
+                    <span class="reaction-bubble bubble-insight">💡</span>
+                    <span class="reaction-bubble bubble-curious">💚</span>
+                    <span class="reactions-count">1.248 reações</span>
+                </div>
+                <div>184 comentários • 92 compartilhamentos</div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn"><span class="icon icon-like"></span>Gostei</button>
+                <button class="action-btn"><span class="icon icon-comment"></span>Comentar</button>
+                <button class="action-btn"><span class="icon icon-share"></span>Compartilhar</button>
+            </div>
+
+            <!-- Comment Section Preview -->
+            <div class="comments-section">
+                <div class="comment-item">
+                    <div class="comment-avatar">
+                        <img src="avatar.jpg" alt="Lucas Mesquita">
+                    </div>
+                    <div class="comment-bubble">
+                        <div class="comment-author">Lucas Mesquita (Autor)</div>
+                        <div class="comment-text">Como prometido, segue o script em Python que desenvolvi para rodar os cálculos de IPP via AHP e exportar os índices dos batedores:</div>
+                        <div class="code-box"># Pesos calculados via AHP
+w_comp, w_game, w_placar, w_time = 0.109, 0.225, 0.418, 0.248
+
+# Normalização e cálculo do Score AHP
+df['pressure_score_ahp'] = (
+    w_comp * df['dim_comp'] +
+    w_game * df['dim_game'] +
+    w_placar * df['dim_placar'] +
+    w_time * df['dim_time']
+) * 10.0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-approve" onclick="window.close()">Aprovar e Fechar Visualização</button>
+    </div>
+</body>
+</html>
