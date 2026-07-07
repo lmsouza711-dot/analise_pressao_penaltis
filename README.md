@@ -56,12 +56,7 @@ $$\text{CPI} = \frac{\sum \text{AHP Pressure Score of Converted Penalties}}{\sum
 ├── enrich_dataset.py                        # Data cleaning and feature engineering
 ├── plot_enriched_penalties.py               # Spaced chart generator (matplotlib)
 ├── README.md                                # Project overview
-└── docs/                                    # Internal documents and preview assets
-    ├── pressure_analysis.png                # Output chart
-    ├── linkedin_preview.html                # HTML simulation of the LinkedIn post
-    ├── avatar.jpg                           # Preview profile picture
-    ├── analise_pressao_penaltis.md          # Draft LinkedIn post
-    └── metodologia_ahp_cpi.md               # Mathematical AHP derivation
+
 ```
 
 ---
